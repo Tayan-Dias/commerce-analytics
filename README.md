@@ -21,7 +21,17 @@ Detailed documentation by root folder:
 |- backend/
 |- data/
 |  |- processed/
+|  |  |- .gitignore
+|  |  |- clean_categories.csv
+|  |  |- clean_customers.csv
+|  |  |- clean_inventory.csv
+|  |  |- clean_products.csv
+|  |  |- clean_sales.csv
+|  |  |- data_quality_report.json
+|  |  |- metrics.json
+|  |  \- rejected_rows.csv
 |  \- raw/
+|     |- .gitignore
 |     |- categories.csv
 |     |- customers.csv
 |     |- inventory.csv
@@ -40,9 +50,20 @@ Detailed documentation by root folder:
 |  |- ontology-diagram.pdf
 |  \- ontology-diagram.png
 \- python/
+   |- .gitignore
    |- requirements.txt
    \- scripts/
+      |- etl_core.py
+      |- etl_pipeline.py
       \- generate_data.py
 ```
 
 ## How to run
+
+```bash
+pip install -r python/requirements.txt
+python python/scripts/generate_data.py
+python python/scripts/etl_pipeline.py
+```
+
+Raw CSV files are generated in `data/raw/`, and the ETL outputs are written to `data/processed/`.

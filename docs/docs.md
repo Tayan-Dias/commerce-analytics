@@ -9,7 +9,12 @@ This folder centralizes detailed repository documentation.
 The folder currently contains:
 
 - `Aplos Assessment.pdf`
-- one Markdown document for each root folder already present in the repository
+- `backend.md`
+- `data.md`
+- `docs.md`
+- `frontend.md`
+- `ontology.md`
+- `python.md`
 
 ## Notes
 
