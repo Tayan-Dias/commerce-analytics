@@ -19,6 +19,22 @@ Detailed documentation by root folder:
 .
 |- README.md
 |- backend/
+|  |- .gitignore
+|  |- package-lock.json
+|  |- package.json
+|  |- tsconfig.json
+|  \- src/
+|     |- server.ts
+|     |- controllers/
+|     |  \- metrics.controller.ts
+|     |- routes/
+|     |  \- metrics.routes.ts
+|     |- services/
+|     |  \- metrics.service.ts
+|     |- types/
+|     |  \- metrics.types.ts
+|     \- utils/
+|        \- loadMetrics.ts
 |- data/
 |  |- processed/
 |  |  |- .gitignore
@@ -60,10 +76,35 @@ Detailed documentation by root folder:
 
 ## How to run
 
+### Generate and process data
+
 ```bash
 pip install -r python/requirements.txt
 python python/scripts/generate_data.py
 python python/scripts/etl_pipeline.py
 ```
 
-Raw CSV files are generated in `data/raw/`, and the ETL outputs are written to `data/processed/`.
+### Run the backend API
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+The backend reads `data/processed/metrics.json` and serves analytics endpoints on `http://localhost:3000`.
+
+## API Endpoints
+
+- `GET /api/revenue-by-region`
+- `GET /api/top-products`
+- `GET /api/customer-churn`
+- `GET /api/low-stock-high-sales`
+- `GET /api/overstock-low-sales`
+- `GET /api/turnover-by-category`
+
+## Data Flow
+
+1. Python generates raw CSV files in `data/raw/`.
+2. The ETL pipeline cleans and consolidates them into `data/processed/`.
+3. The backend reads `data/processed/metrics.json` and exposes it through REST endpoints.

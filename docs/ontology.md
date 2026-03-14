@@ -11,6 +11,7 @@ The folder currently contains:
 - `ontology-diagram.pdf`
 - `ontology-diagram.png`
 
-## Notes
+## How to use
 
-These files represent the visual ontology reference currently kept at the repository root level in `ontology/`.
+- Open `ontology-diagram.png` for a quick visual view.
+- Open `ontology-diagram.pdf` for the document version of the same diagram.

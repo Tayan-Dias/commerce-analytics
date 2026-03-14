@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder centralizes detailed repository documentation.
+This folder centralizes the repository documentation.
 
 ## Current state
 
@@ -16,6 +16,12 @@ The folder currently contains:
 - `ontology.md`
 - `python.md`
 
-## Notes
+## Documentation flow
 
-The root `README.md` acts as a summary and entry point, while this folder holds the more detailed folder-level documentation.
+- The root `README.md` acts as a summary and entry point.
+- Each file in `docs/` explains one root folder in more detail.
+
+## How to maintain
+
+- Update `README.md` when the project tree or main workflow changes.
+- Update the matching file in `docs/` when a root folder gains new behavior, commands, or responsibilities.

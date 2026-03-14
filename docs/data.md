@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder stores the project datasets used by the assessment.
+This folder stores the assessment datasets used by the Python ETL and the backend API.
 
 ## Structure
 
@@ -29,26 +29,21 @@ data/
 
 ## Current state
 
-- `raw/` contains the generated source CSV files with controlled inconsistencies for ETL testing.
-- `processed/` contains the cleaned CSVs, rejected rows, quality report, and consolidated metrics.
+- `raw/` contains generated source CSV files with a few controlled inconsistencies.
+- `processed/` contains cleaned CSVs, rejected rows, a quality report, and consolidated metrics.
+
+## How to generate the data
+
+```bash
+python python/scripts/generate_data.py
+```
+
+## How to process the data
+
+```bash
+python python/scripts/etl_pipeline.py
+```
 
 ## Notes
 
-The raw files currently available are:
-
-- `categories.csv`
-- `customers.csv`
-- `inventory.csv`
-- `products.csv`
-- `sales.csv`
-
-The processed files currently available are:
-
-- `clean_categories.csv`
-- `clean_customers.csv`
-- `clean_inventory.csv`
-- `clean_products.csv`
-- `clean_sales.csv`
-- `data_quality_report.json`
-- `metrics.json`
-- `rejected_rows.csv`
+`metrics.json` is the file consumed by the backend API.
