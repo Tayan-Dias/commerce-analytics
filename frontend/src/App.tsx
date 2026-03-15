@@ -27,8 +27,11 @@ export default function App() {
   if (error) return <div style={{ padding: 32 }}>Failed to load dashboard data.</div>;
 
   const categories = [...new Set(topProducts.map((item) => item.category))];
-  const filteredProducts =
-    category === "All" ? topProducts : topProducts.filter((item) => item.category === category);
+  let filteredProducts = topProducts;
+
+  if (category !== "All") {
+    filteredProducts = topProducts.filter((item) => item.category === category);
+  }
 
   return (
     <main style={{ maxWidth: 960, margin: "0 auto", padding: 32 }}>
@@ -36,6 +39,8 @@ export default function App() {
         style={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
           gap: 16,
           padding: 24,
           marginBottom: 24,
@@ -46,47 +51,38 @@ export default function App() {
           boxShadow: "0 10px 24px rgba(15, 23, 42, 0.06)"
         }}
       >
-        <img
-          src="/aplos_innovation_logo.jpg"
-          alt="Aplos Assessment logo"
-          style={{
-            width: 64,
-            height: 64,
-            borderRadius: 12,
-            flexShrink: 0,
-            objectFit: "cover",
-          }}
-        />
-        <div>
-          <p
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <img
+            src="/aplos_innovation_logo.jpg"
+            alt="Aplos Assessment logo"
             style={{
-              margin: 0,
-              fontSize: 12,
-              letterSpacing: 2,
-              textTransform: "uppercase",
-              color: "#6b7280"
+              width: 64,
+              height: 64,
+              borderRadius: 12,
+              flexShrink: 0,
+              objectFit: "cover",
             }}
-          >
-            Retail Analytics
-          </p>
-          <h1 style={{ margin: "6px 0 8px", fontSize: 32 }}>Aplos Assessment | Dashboard</h1>
-          <p style={{ margin: 0, color: "#4b5563", lineHeight: 1.5 }}>
-            Theashboard for the Aplos Assessment analytics experience.
-          </p>
+          />
+          <div>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 12,
+                letterSpacing: 2,
+                textTransform: "uppercase",
+                color: "#6b7280"
+              }}
+            >
+              Retail Analytics
+            </p>
+            <h1 style={{ margin: "6px 0 8px", fontSize: 32 }}>Aplos Assessment | Dashboard</h1>
+            <p style={{ margin: 0, color: "#4b5563", lineHeight: 1.5 }}>
+              A quick view of revenue, products, and stock for the Aplos Assessment.
+            </p>
+          </div>
         </div>
-      </header>
-
-      <section
-        style={{
-          background: "#fff",
-          padding: 16,
-          borderRadius: 12,
-          marginBottom: 24,
-          boxShadow: "0 10px 24px rgba(15, 23, 42, 0.06)"
-        }}
-      >
         <Filters categories={categories} value={category} onChange={setCategory} />
-      </section>
+      </header>
 
       <RevenueChart data={revenue} />
       <TopProductsChart data={filteredProducts} />
