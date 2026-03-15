@@ -7,11 +7,7 @@ from faker import Faker
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = (
-    SCRIPT_DIR.parent.parent
-    if (SCRIPT_DIR.parent.parent / "data").exists()
-    else SCRIPT_DIR.parent
-)
+PROJECT_ROOT = SCRIPT_DIR.parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "data" / "raw"
 
 fake = Faker("en_US")
@@ -64,6 +60,13 @@ def get_price(category):
     return round(random.uniform(min_price, max_price), 2)
 
 
+def calculate_turnover_rate(sold_quantity, current_stock):
+    if current_stock <= 0:
+        return 0
+
+    return round(sold_quantity / current_stock, 2)
+
+
 def save_csv(filename, fieldnames, rows):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -112,7 +115,7 @@ def recalculate_inventory_turnover(inventory, products, sales):
     for row in inventory:
         sold_quantity = sales_totals.get(row["product_id"], 0)
         current_stock = row["current_stock"]
-        row["turnover_rate"] = 0 if current_stock <= 0 else round(sold_quantity / current_stock, 2)
+        row["turnover_rate"] = calculate_turnover_rate(sold_quantity, current_stock)
 
 
 def generate_customers():
@@ -195,7 +198,7 @@ def generate_inventory(products, sales):
             "id": product_id,
             "product_id": product_id,
             "current_stock": current_stock,
-            "turnover_rate": 0 if current_stock == 0 else round(sold_quantity / current_stock, 2),
+            "turnover_rate": calculate_turnover_rate(sold_quantity, current_stock),
         }
         inventory.append(inventory_item)
 
