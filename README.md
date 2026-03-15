@@ -62,6 +62,22 @@ Detailed documentation by root folder:
 |  |- ontology.md
 |  \- python.md
 |- frontend/
+|  |- .gitignore
+|  |- index.html
+|  |- package-lock.json
+|  |- package.json
+|  |- tsconfig.json
+|  \- src/
+|     |- App.tsx
+|     |- main.tsx
+|     |- components/
+|     |  |- Filters.tsx
+|     |  |- RevenueChart.tsx
+|     |  \- TopProductsChart.tsx
+|     |- services/
+|     |  \- api.ts
+|     \- types/
+|        \- metrics.ts
 |- ontology/
 |  |- ontology-diagram.pdf
 |  \- ontology-diagram.png
@@ -94,6 +110,16 @@ npm run dev
 
 The backend reads `data/processed/metrics.json` and serves analytics endpoints on `http://localhost:3000`.
 
+### Run the frontend dashboard
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend consumes the backend API and renders the dashboard in the Vite dev server.
+
 ## API Endpoints
 
 - `GET /api/revenue-by-region`
@@ -108,3 +134,4 @@ The backend reads `data/processed/metrics.json` and serves analytics endpoints o
 1. Python generates raw CSV files in `data/raw/`.
 2. The ETL pipeline cleans and consolidates them into `data/processed/`.
 3. The backend reads `data/processed/metrics.json` and exposes it through REST endpoints.
+4. The frontend consumes the backend endpoints and renders the dashboard charts.

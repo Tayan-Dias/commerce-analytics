@@ -19,7 +19,7 @@ The folder currently contains:
 ## Documentation flow
 
 - The root `README.md` acts as a summary and entry point.
-- Each file in `docs/` explains one root folder in more detail.
+- Each file in `docs/` explains one root folder in more detail, including responsibilities and execution commands when applicable.
 
 ## How to maintain
 
