@@ -4,10 +4,9 @@ import express from "express";
 import metricsRoutes from "./routes/metrics.routes";
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(cors());
-app.use(express.json());
 app.use("/api", metricsRoutes);
 
 app.listen(PORT, () => {

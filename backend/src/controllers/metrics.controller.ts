@@ -1,28 +1,28 @@
-import type { Request, Response } from "express";
+import type { RequestHandler, Response } from "express";
 
-import { metricsService } from "../services/metrics.service";
+import type { Metrics } from "../types/metrics.types";
+import { loadMetrics } from "../utils/loadMetrics";
 
 function handleError(res: Response) {
   return res.status(500).json({ message: "Failed to load metrics data" });
 }
 
+function createMetricsHandler(section: keyof Metrics): RequestHandler {
+  return async (_req, res) => {
+    try {
+      const metrics = await loadMetrics();
+      return res.json(metrics[section]);
+    } catch {
+      return handleError(res);
+    }
+  };
+}
+
 export const metricsController = {
-  async getRevenueByRegion(_req: Request, res: Response) {
-    try { return res.json(await metricsService.getRevenueByRegion()); } catch { return handleError(res); }
-  },
-  async getTopProducts(_req: Request, res: Response) {
-    try { return res.json(await metricsService.getTopProducts()); } catch { return handleError(res); }
-  },
-  async getCustomerChurn(_req: Request, res: Response) {
-    try { return res.json(await metricsService.getCustomerChurn()); } catch { return handleError(res); }
-  },
-  async getLowStockHighSales(_req: Request, res: Response) {
-    try { return res.json(await metricsService.getLowStockHighSales()); } catch { return handleError(res); }
-  },
-  async getOverstockLowSales(_req: Request, res: Response) {
-    try { return res.json(await metricsService.getOverstockLowSales()); } catch { return handleError(res); }
-  },
-  async getTurnoverByCategory(_req: Request, res: Response) {
-    try { return res.json(await metricsService.getTurnoverByCategory()); } catch { return handleError(res); }
-  }
+  getRevenueByRegion: createMetricsHandler("revenue_by_region"),
+  getTopProducts: createMetricsHandler("top_selling_products"),
+  getCustomerChurn: createMetricsHandler("customer_churn"),
+  getLowStockHighSales: createMetricsHandler("low_stock_high_sales"),
+  getOverstockLowSales: createMetricsHandler("overstock_low_sales"),
+  getTurnoverByCategory: createMetricsHandler("turnover_by_category"),
 };

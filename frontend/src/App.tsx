@@ -32,8 +32,62 @@ export default function App() {
 
   return (
     <main style={{ maxWidth: 960, margin: "0 auto", padding: 32 }}>
-      <h1 style={{ marginBottom: 24 }}>Dashboard</h1>
-      <Filters categories={categories} value={category} onChange={setCategory} />
+      <header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          padding: 24,
+          marginBottom: 24,
+          borderRadius: 12,
+          background: "#fff",
+          color: "#1f2937",
+          border: "1px solid #e5e7eb",
+          boxShadow: "0 10px 24px rgba(15, 23, 42, 0.06)"
+        }}
+      >
+        <img
+          src="/aplos_innovation_logo.jpg"
+          alt="Aplos Assessment logo"
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: 12,
+            flexShrink: 0,
+            objectFit: "cover",
+          }}
+        />
+        <div>
+          <p
+            style={{
+              margin: 0,
+              fontSize: 12,
+              letterSpacing: 2,
+              textTransform: "uppercase",
+              color: "#6b7280"
+            }}
+          >
+            Retail Analytics
+          </p>
+          <h1 style={{ margin: "6px 0 8px", fontSize: 32 }}>Aplos Assessment | Dashboard</h1>
+          <p style={{ margin: 0, color: "#4b5563", lineHeight: 1.5 }}>
+            Theashboard for the Aplos Assessment analytics experience.
+          </p>
+        </div>
+      </header>
+
+      <section
+        style={{
+          background: "#fff",
+          padding: 16,
+          borderRadius: 12,
+          marginBottom: 24,
+          boxShadow: "0 10px 24px rgba(15, 23, 42, 0.06)"
+        }}
+      >
+        <Filters categories={categories} value={category} onChange={setCategory} />
+      </section>
+
       <RevenueChart data={revenue} />
       <TopProductsChart data={filteredProducts} />
     </main>
