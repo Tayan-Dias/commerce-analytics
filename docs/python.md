@@ -20,9 +20,9 @@ python/
 
 - `.gitignore` ignores local Python cache files and virtual environments inside this folder.
 - `requirements.txt` defines the Python dependency used by the scripts.
-- `scripts/generate_data.py` generates the raw CSV files in `data/raw/`.
+- `scripts/generate_data.py` generates the raw CSV files in `data/raw/` and injects a small set of controlled inconsistencies and business scenarios.
 - `scripts/etl_pipeline.py` orchestrates the ETL flow and writes outputs to `data/processed/`.
-- `scripts/etl_core.py` contains ETL configuration, validation rules, and metric calculations.
+- `scripts/etl_core.py` contains ETL configuration, validation rules, cleaning helpers, and metric calculations.
 
 ## How to install
 
@@ -41,6 +41,15 @@ python python/scripts/generate_data.py
 ```bash
 python python/scripts/etl_pipeline.py
 ```
+
+## Outputs
+
+After the ETL runs, `data/processed/` includes:
+
+- cleaned CSV files
+- `rejected_rows.csv`
+- `data_quality_report.json`
+- `metrics.json`
 
 ## Execution order
 

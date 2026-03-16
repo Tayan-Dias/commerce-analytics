@@ -1,106 +1,69 @@
 # Aplos Assessment
 
-## Summary
-
-This repository is organized as a monorepo with dedicated areas for data, Python utilities, application surfaces, and documentation.
-
-Detailed documentation by root folder:
+## Detailed Docs
 
 - [backend/](docs/backend.md)
 - [data/](docs/data.md)
-- [docs/](docs/docs.md)
 - [frontend/](docs/frontend.md)
 - [ontology/](docs/ontology.md)
 - [python/](docs/python.md)
 
-## Structure
+## Summary
 
-```text
-.
-|- README.md
-|- backend/
-|  |- .gitignore
-|  |- package-lock.json
-|  |- package.json
-|  |- tsconfig.json
-|  \- src/
-|     |- server.ts
-|     |- controllers/
-|     |  \- metrics.controller.ts
-|     |- routes/
-|     |  \- metrics.routes.ts
-|     |- services/
-|     |  \- metrics.service.ts
-|     |- types/
-|     |  \- metrics.types.ts
-|     \- utils/
-|        \- loadMetrics.ts
-|- data/
-|  |- processed/
-|  |  |- .gitignore
-|  |  |- clean_categories.csv
-|  |  |- clean_customers.csv
-|  |  |- clean_inventory.csv
-|  |  |- clean_products.csv
-|  |  |- clean_sales.csv
-|  |  |- data_quality_report.json
-|  |  |- metrics.json
-|  |  \- rejected_rows.csv
-|  \- raw/
-|     |- .gitignore
-|     |- categories.csv
-|     |- customers.csv
-|     |- inventory.csv
-|     |- products.csv
-|     \- sales.csv
-|- docs/
-|  |- Aplos Assessment.pdf
-|  |- backend.md
-|  |- data.md
-|  |- docs.md
-|  |- frontend.md
-|  |- ontology.md
-|  \- python.md
-|- frontend/
-|  |- .gitignore
-|  |- index.html
-|  |- package-lock.json
-|  |- package.json
-|  |- tsconfig.json
-|  \- src/
-|     |- App.tsx
-|     |- main.tsx
-|     |- components/
-|     |  |- Filters.tsx
-|     |  |- RevenueChart.tsx
-|     |  \- TopProductsChart.tsx
-|     |- services/
-|     |  \- api.ts
-|     \- types/
-|        \- metrics.ts
-|- ontology/
-|  |- ontology-diagram.pdf
-|  \- ontology-diagram.png
-\- python/
-   |- .gitignore
-   |- requirements.txt
-   \- scripts/
-      |- etl_core.py
-      |- etl_pipeline.py
-      \- generate_data.py
-```
+This repository is organized as a monorepo for a retail analytics assessment.
 
-## How to run
+- `python/` generates raw CSV files and runs the ETL pipeline
+- `ontology/` stores the conceptual model artifacts for the assessment
+- `python/` generates the raw CSV data and runs the ETL pipeline
+- `backend/` exposes processed metrics through a simple TypeScript API
+- `frontend/` renders the analytics dashboard
+- `data/` stores the raw and processed datasets
 
-### Generate and process data
+## Run From Zero
+
+### 1. Install prerequisites
+
+Make sure you have:
+
+- Python 3 installed
+- Node.js and npm installed
+
+### 2. Install Python dependencies
+
+From the project root:
 
 ```bash
 pip install -r python/requirements.txt
+```
+
+### 3. Generate the raw CSV files
+
+Still from the project root:
+
+```bash
 python python/scripts/generate_data.py
+```
+
+This creates the raw files in `data/raw/`.
+
+### 4. Run the ETL pipeline
+
+From the project root:
+
+```bash
 python python/scripts/etl_pipeline.py
 ```
 
-### Run the backend API
+This creates the processed outputs in `data/processed/`, including:
+
+- `clean_*.csv`
+- `data_quality_report.json`
+- `metrics.json`
+- `rejected_rows.csv`
+
+### 5. Start the backend
+
+Open a new terminal:
 
 ```bash
 cd backend
@@ -108,9 +71,11 @@ npm install
 npm run dev
 ```
 
-The backend reads `data/processed/metrics.json` and serves analytics endpoints on `http://localhost:3000`.
+The backend reads `data/processed/metrics.json` and serves the API on `http://localhost:3000`.
 
-### Run the frontend dashboard
+### 6. Start the frontend
+
+Open another terminal:
 
 ```bash
 cd frontend
@@ -126,7 +91,6 @@ The frontend consumes the backend API and renders the dashboard in the Vite dev 
 - `GET /api/top-products`
 - `GET /api/customer-churn`
 - `GET /api/low-stock-high-sales`
-- `GET /api/overstock-low-sales`
 - `GET /api/turnover-by-category`
 
 ## Data Flow

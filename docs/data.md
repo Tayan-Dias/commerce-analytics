@@ -31,6 +31,12 @@ data/
 
 - `raw/` contains generated source CSV files with a few controlled inconsistencies.
 - `processed/` contains cleaned CSVs, rejected rows, a quality report, and consolidated metrics.
+- `metrics.json` currently includes:
+  - revenue by region
+  - top-selling products
+  - customer churn
+  - low stock with high sales
+  - turnover by category
 
 ## How to generate the data
 
@@ -46,4 +52,5 @@ python python/scripts/etl_pipeline.py
 
 ## Notes
 
-`metrics.json` is the file consumed by the backend API.
+- `metrics.json` is the file consumed by the backend API.
+- `data_quality_report.json` and `rejected_rows.csv` are the main ETL audit outputs.

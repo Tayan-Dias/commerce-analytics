@@ -17,9 +17,13 @@ frontend/
    |- App.tsx
    |- main.tsx
    |- components/
+   |  |- CustomerChurnCard.tsx
    |  |- Filters.tsx
+   |  |- Insight.tsx
+   |  |- InventorySignals.tsx
    |  |- RevenueChart.tsx
-   |  \- TopProductsChart.tsx
+   |  |- TopProductsChart.tsx
+   |  \- TurnoverChart.tsx
    |- services/
    |  \- api.ts
    \- types/
@@ -29,8 +33,14 @@ frontend/
 ## Current state
 
 - The frontend is implemented with React, TypeScript, Recharts, Axios, and Vite.
-- It consumes the backend endpoints for revenue by region and top products.
-- It includes loading state, error handling, and a simple category filter.
+- It consumes the backend endpoints for revenue by region, top products, customer churn, low stock signals, and turnover by category.
+- It includes loading state, error handling, local category filters, and insight text inside each analytics block.
+- The dashboard is organized into five main blocks:
+  - `Customer Churn`
+  - `Revenue by Region`
+  - `Turnover by Category`
+  - `Top Selling Products`
+  - `Inventory Signals`
 
 ## How to run
 
@@ -54,3 +64,6 @@ npm start
 - The current dashboard uses:
   - `GET /api/revenue-by-region`
   - `GET /api/top-products`
+  - `GET /api/customer-churn`
+  - `GET /api/low-stock-high-sales`
+  - `GET /api/turnover-by-category`

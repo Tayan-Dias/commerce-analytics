@@ -18,8 +18,6 @@ backend/
    |  \- metrics.controller.ts
    |- routes/
    |  \- metrics.routes.ts
-   |- services/
-   |  \- metrics.service.ts
    |- types/
    |  \- metrics.types.ts
    \- utils/
@@ -31,6 +29,7 @@ backend/
 - The backend is implemented with Node.js, Express, and TypeScript.
 - It reads `data/processed/metrics.json`.
 - It exposes read-only REST endpoints for analytics metrics.
+- The structure is intentionally small: `routes`, `controllers`, `types`, and `utils`.
 
 ## API endpoints
 
@@ -38,7 +37,6 @@ backend/
 - `GET /api/top-products`
 - `GET /api/customer-churn`
 - `GET /api/low-stock-high-sales`
-- `GET /api/overstock-low-sales`
 - `GET /api/turnover-by-category`
 
 ## How to run
