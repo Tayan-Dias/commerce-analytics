@@ -1,10 +1,11 @@
 interface FiltersProps {
-  categories: string[];
+  label: string;
+  options: string[];
   value: string;
   onChange: (value: string) => void;
 }
 
-export default function Filters({ categories, value, onChange }: FiltersProps) {
+export default function Filters({ label, options, value, onChange }: FiltersProps) {
   return (
     <label
       style={{
@@ -13,24 +14,25 @@ export default function Filters({ categories, value, onChange }: FiltersProps) {
         gap: 8,
         minWidth: 180,
         fontSize: 14,
-        color: "#4b5563"
+        color: "#4b5563",
       }}
     >
-      <span style={{ fontWeight: 600 }}>Category Filter</span>
+      <span style={{ fontWeight: 600 }}>{label}</span>
       <select
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
         style={{
           padding: "10px 12px",
-          borderRadius: 8,
           border: "1px solid #d1d5db",
+          borderRadius: 8,
           background: "#fff",
-          color: "#1f2937"
+          color: "#1f2937",
+          font: "inherit",
         }}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
       >
         <option value="All">All</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>{category}</option>
+        {options.map((option) => (
+          <option key={option} value={option}>{option}</option>
         ))}
       </select>
     </label>

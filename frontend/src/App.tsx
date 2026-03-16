@@ -1,40 +1,75 @@
 import { useEffect, useState } from "react";
 
-import Filters from "./components/Filters";
+import CustomerChurnCard from "./components/CustomerChurnCard";
+import InventorySignals from "./components/InventorySignals";
 import RevenueChart from "./components/RevenueChart";
 import TopProductsChart from "./components/TopProductsChart";
-import { getRevenueByRegion, getTopProducts } from "./services/api";
-import type { RevenueItem, TopProduct } from "./types/metrics";
+import TurnoverChart from "./components/TurnoverChart";
+import {
+  getCustomerChurn,
+  getLowStockHighSales,
+  getRevenueByRegion,
+  getTopProducts,
+  getTurnoverByCategory,
+} from "./services/api";
+import type {
+  CategoryTurnover,
+  CustomerChurn,
+  RevenueItem,
+  StockMetric,
+  TopProduct,
+} from "./types/metrics";
 
 export default function App() {
   const [revenue, setRevenue] = useState<RevenueItem[]>([]);
   const [topProducts, setTopProducts] = useState<TopProduct[]>([]);
-  const [category, setCategory] = useState("All");
+  const [customerChurn, setCustomerChurn] = useState<CustomerChurn | null>(null);
+  const [lowStockHighSales, setLowStockHighSales] = useState<StockMetric[]>([]);
+  const [turnoverByCategory, setTurnoverByCategory] = useState<CategoryTurnover[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    Promise.all([getRevenueByRegion(), getTopProducts()])
-      .then(([revenueData, topProductsData]) => {
-        setRevenue(revenueData);
-        setTopProducts(topProductsData);
-      })
+    Promise.all([
+      getRevenueByRegion(),
+      getTopProducts(),
+      getCustomerChurn(),
+      getLowStockHighSales(),
+      getTurnoverByCategory(),
+    ])
+      .then(
+        ([
+          revenueData,
+          topProductsData,
+          customerChurnData,
+          lowStockHighSalesData,
+          turnoverByCategoryData,
+        ]) => {
+          setRevenue(revenueData);
+          setTopProducts(topProductsData);
+          setCustomerChurn(customerChurnData);
+          setLowStockHighSales(lowStockHighSalesData);
+          setTurnoverByCategory(turnoverByCategoryData);
+        },
+      )
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div style={{ padding: 32 }}>Loading dashboard...</div>;
-  if (error) return <div style={{ padding: 32 }}>Failed to load dashboard data.</div>;
-
-  const categories = [...new Set(topProducts.map((item) => item.category))];
-  let filteredProducts = topProducts;
-
-  if (category !== "All") {
-    filteredProducts = topProducts.filter((item) => item.category === category);
-  }
+  if (loading) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Loading dashboard...</div>;
+  if (error) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Failed to load dashboard data.</div>;
+  if (!customerChurn) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Failed to load dashboard data.</div>;
 
   return (
-    <main style={{ maxWidth: 960, margin: "0 auto", padding: 32 }}>
+    <main
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        padding: "24px 32px 40px",
+        display: "grid",
+        gap: 46,
+      }}
+    >
       <header
         style={{
           display: "flex",
@@ -43,25 +78,22 @@ export default function App() {
           flexWrap: "wrap",
           gap: 16,
           padding: 24,
-          marginBottom: 24,
-          borderRadius: 12,
           background: "#fff",
-          color: "#1f2937",
           border: "1px solid #e5e7eb",
-          boxShadow: "0 10px 24px rgba(15, 23, 42, 0.06)"
+          borderRadius: 12,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <img
-            src="/aplos_innovation_logo.jpg"
-            alt="Aplos Assessment logo"
             style={{
               width: 64,
               height: 64,
               borderRadius: 12,
-              flexShrink: 0,
               objectFit: "cover",
+              flexShrink: 0,
             }}
+            src="/aplos_innovation_logo.jpg"
+            alt="Aplos Assessment logo"
           />
           <div>
             <p
@@ -70,7 +102,7 @@ export default function App() {
                 fontSize: 12,
                 letterSpacing: 2,
                 textTransform: "uppercase",
-                color: "#6b7280"
+                color: "#6b7280",
               }}
             >
               Retail Analytics
@@ -81,11 +113,31 @@ export default function App() {
             </p>
           </div>
         </div>
-        <Filters categories={categories} value={category} onChange={setCategory} />
       </header>
 
-      <RevenueChart data={revenue} />
-      <TopProductsChart data={filteredProducts} />
+      <CustomerChurnCard data={customerChurn} />
+
+      <div
+        style={{
+          display: "grid",
+          gap: 24,
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+        }}
+      >
+        <RevenueChart data={revenue} />
+        <TurnoverChart data={turnoverByCategory} />
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gap: 24,
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+        }}
+      >
+        <TopProductsChart data={topProducts} />
+        <InventorySignals lowStockHighSales={lowStockHighSales} />
+      </div>
     </main>
   );
 }

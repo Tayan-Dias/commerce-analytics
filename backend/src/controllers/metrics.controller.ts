@@ -29,9 +29,6 @@ export const metricsController = {
   async getLowStockHighSales(_req: Request, res: Response) {
     return sendMetricsSection(res, "low_stock_high_sales");
   },
-  async getOverstockLowSales(_req: Request, res: Response) {
-    return sendMetricsSection(res, "overstock_low_sales");
-  },
   async getTurnoverByCategory(_req: Request, res: Response) {
     return sendMetricsSection(res, "turnover_by_category");
   },
