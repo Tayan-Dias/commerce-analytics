@@ -5,13 +5,7 @@ import InventorySignals from "./components/InventorySignals";
 import RevenueChart from "./components/RevenueChart";
 import TopProductsChart from "./components/TopProductsChart";
 import TurnoverChart from "./components/TurnoverChart";
-import {
-  getCustomerChurn,
-  getLowStockHighSales,
-  getRevenueByRegion,
-  getTopProducts,
-  getTurnoverByCategory,
-} from "./services/api";
+import { getDashboardMetrics } from "./services/api";
 import type {
   CategoryTurnover,
   CustomerChurn,
@@ -30,35 +24,21 @@ export default function App() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    Promise.all([
-      getRevenueByRegion(),
-      getTopProducts(),
-      getCustomerChurn(),
-      getLowStockHighSales(),
-      getTurnoverByCategory(),
-    ])
-      .then(
-        ([
-          revenueData,
-          topProductsData,
-          customerChurnData,
-          lowStockHighSalesData,
-          turnoverByCategoryData,
-        ]) => {
-          setRevenue(revenueData);
-          setTopProducts(topProductsData);
-          setCustomerChurn(customerChurnData);
-          setLowStockHighSales(lowStockHighSalesData);
-          setTurnoverByCategory(turnoverByCategoryData);
-        },
-      )
+    getDashboardMetrics()
+      .then(({ revenue, topProducts, customerChurn, lowStockHighSales, turnoverByCategory }) => {
+        setRevenue(revenue);
+        setTopProducts(topProducts);
+        setCustomerChurn(customerChurn);
+        setLowStockHighSales(lowStockHighSales);
+        setTurnoverByCategory(turnoverByCategory);
+      })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Loading dashboard...</div>;
-  if (error) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Failed to load dashboard data.</div>;
-  if (!customerChurn) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Failed to load dashboard data.</div>;
+  if (loading) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Loading analytics showcase...</div>;
+  if (error) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Failed to load analytics data.</div>;
+  if (!customerChurn) return <div style={{ maxWidth: 1200, margin: "0 auto", padding: 32 }}>Failed to load analytics data.</div>;
 
   return (
     <main
@@ -92,8 +72,8 @@ export default function App() {
               objectFit: "cover",
               flexShrink: 0,
             }}
-            src="/aplos_innovation_logo.jpg"
-            alt="Aplos Assessment logo"
+            src="/showcase-mark.jpg"
+            alt="Commerce Analytics Showcase mark"
           />
           <div>
             <p
@@ -105,11 +85,11 @@ export default function App() {
                 color: "#6b7280",
               }}
             >
-              Retail Analytics
+              Open Source Portfolio
             </p>
-            <h1 style={{ margin: "6px 0 8px", fontSize: 32 }}>Aplos Assessment | Dashboard</h1>
+            <h1 style={{ margin: "6px 0 8px", fontSize: 32 }}>Commerce Analytics Showcase</h1>
             <p style={{ margin: 0, color: "#4b5563", lineHeight: 1.5 }}>
-              A quick view of revenue, products, and stock for the Aplos Assessment.
+              A Power BI-inspired dashboard built to showcase React, Node.js, and retail analytics modeling in one project.
             </p>
           </div>
         </div>

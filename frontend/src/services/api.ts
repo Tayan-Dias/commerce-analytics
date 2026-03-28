@@ -10,27 +10,30 @@ import type {
 
 const api = axios.create({ baseURL: "http://localhost:3000/api" });
 
-export async function getRevenueByRegion(): Promise<RevenueItem[]> {
-  const { data } = await api.get<Record<string, number>>("/revenue-by-region");
-  return Object.entries(data).map(([region, revenue]) => ({ region, revenue }));
+interface DashboardMetricsResponse {
+  revenue_by_region: Record<string, number>;
+  top_selling_products: TopProduct[];
+  customer_churn: CustomerChurn;
+  low_stock_high_sales: StockMetric[];
+  turnover_by_category: CategoryTurnover[];
 }
 
-export async function getTopProducts(): Promise<TopProduct[]> {
-  const { data } = await api.get<TopProduct[]>("/top-products");
-  return data;
+export interface DashboardMetrics {
+  revenue: RevenueItem[];
+  topProducts: TopProduct[];
+  customerChurn: CustomerChurn;
+  lowStockHighSales: StockMetric[];
+  turnoverByCategory: CategoryTurnover[];
 }
 
-export async function getCustomerChurn(): Promise<CustomerChurn> {
-  const { data } = await api.get<CustomerChurn>("/customer-churn");
-  return data;
-}
+export async function getDashboardMetrics(): Promise<DashboardMetrics> {
+  const { data } = await api.get<DashboardMetricsResponse>("/metrics");
 
-export async function getLowStockHighSales(): Promise<StockMetric[]> {
-  const { data } = await api.get<StockMetric[]>("/low-stock-high-sales");
-  return data;
-}
-
-export async function getTurnoverByCategory(): Promise<CategoryTurnover[]> {
-  const { data } = await api.get<CategoryTurnover[]>("/turnover-by-category");
-  return data;
+  return {
+    revenue: Object.entries(data.revenue_by_region).map(([region, revenue]) => ({ region, revenue })),
+    topProducts: data.top_selling_products,
+    customerChurn: data.customer_churn,
+    lowStockHighSales: data.low_stock_high_sales,
+    turnoverByCategory: data.turnover_by_category,
+  };
 }

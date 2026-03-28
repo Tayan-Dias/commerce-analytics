@@ -32,5 +32,6 @@ export interface Metrics {
   top_selling_products: TopSellingProduct[];
   customer_churn: CustomerChurn;
   low_stock_high_sales: StockMetric[];
+  overstock_low_sales: StockMetric[];
   turnover_by_category: CategoryTurnover[];
 }
