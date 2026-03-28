@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder contains the React dashboard for exploring analytics from the backend API.
+This folder contains the React dashboard for the portfolio experience built on top of the backend API.
 
 ## Structure
 
@@ -33,7 +33,8 @@ frontend/
 ## Current state
 
 - The frontend is implemented with React, TypeScript, Recharts, Axios, and Vite.
-- It consumes the backend endpoints for revenue by region, top products, customer churn, low stock signals, and turnover by category.
+- The interface is positioned as a Power BI-inspired showcase for analytics storytelling on the web.
+- It consumes a single backend metrics endpoint and maps the payload into dashboard-friendly frontend structures.
 - It includes loading state, error handling, local category filters, and insight text inside each analytics block.
 - The dashboard is organized into five main blocks:
   - `Customer Churn`
@@ -61,9 +62,4 @@ npm start
 ## Notes
 
 - The frontend expects the backend API to be running on `http://localhost:3000`.
-- The current dashboard uses:
-  - `GET /api/revenue-by-region`
-  - `GET /api/top-products`
-  - `GET /api/customer-churn`
-  - `GET /api/low-stock-high-sales`
-  - `GET /api/turnover-by-category`
+- The current dashboard uses `GET /api/metrics`.

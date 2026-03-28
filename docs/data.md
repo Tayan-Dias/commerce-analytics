@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder stores the assessment datasets used by the Python ETL and the backend API.
+This folder stores the retail datasets used by the Python ETL flow and the backend API.
 
 ## Structure
 

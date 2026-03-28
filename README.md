@@ -1,4 +1,9 @@
-# Aplos Assessment
+# Commerce Analytics Showcase
+
+## Overview
+
+This repository is an open-source portfolio project that demonstrates an end-to-end retail analytics stack.
+It combines Python ETL, a Node.js API, a React dashboard, and data modeling artifacts to present a Power BI-inspired analytics experience built for the web.
 
 ## Detailed Docs
 
@@ -8,18 +13,23 @@
 - [ontology/](docs/ontology.md)
 - [python/](docs/python.md)
 
-## Summary
+## What This Project Demonstrates
 
-This repository is organized as a monorepo for a retail analytics assessment.
+- React + TypeScript dashboard development with reusable chart components
+- Node.js + Express API design for analytics delivery
+- ETL and data quality workflows in Python
+- Data modeling and ontology documentation for the domain
+- A complete local stack that can be used as a technical portfolio piece
 
-- `python/` generates raw CSV files and runs the ETL pipeline
-- `ontology/` stores the conceptual model artifacts for the assessment
-- `python/` generates the raw CSV data and runs the ETL pipeline
-- `backend/` exposes processed metrics through a simple TypeScript API
+## Repository Structure
+
+- `python/` generates source CSV files and runs the ETL pipeline
+- `ontology/` stores the conceptual model artifacts for the retail domain
+- `backend/` exposes processed metrics through a TypeScript REST API
 - `frontend/` renders the analytics dashboard
 - `data/` stores the raw and processed datasets
 
-## Run From Zero
+## Run Locally
 
 ### 1. Install prerequisites
 
@@ -85,17 +95,13 @@ npm run dev
 
 The frontend consumes the backend API and renders the dashboard in the Vite dev server.
 
-## API Endpoints
+## API Endpoint
 
-- `GET /api/revenue-by-region`
-- `GET /api/top-products`
-- `GET /api/customer-churn`
-- `GET /api/low-stock-high-sales`
-- `GET /api/turnover-by-category`
+- `GET /api/metrics`
 
 ## Data Flow
 
 1. Python generates raw CSV files in `data/raw/`.
 2. The ETL pipeline cleans and consolidates them into `data/processed/`.
 3. The backend reads `data/processed/metrics.json` and exposes it through REST endpoints.
-4. The frontend consumes the backend endpoints and renders the dashboard charts.
+4. The frontend consumes the consolidated backend metrics endpoint and renders the dashboard charts.

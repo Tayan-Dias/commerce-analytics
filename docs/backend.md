@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder contains the read-only analytics API for the project.
+This folder contains the read-only analytics API that powers the showcase application.
 
 ## Structure
 
@@ -28,16 +28,14 @@ backend/
 
 - The backend is implemented with Node.js, Express, and TypeScript.
 - It reads `data/processed/metrics.json`.
-- It exposes read-only REST endpoints for analytics metrics.
+- It exposes a read-only REST endpoint for analytics metrics.
+- It is intentionally small and easy to review as part of the portfolio narrative.
 - The structure is intentionally small: `routes`, `controllers`, `types`, and `utils`.
+- The metrics loader uses a 10-second TTL cache to reduce repeated file reads without permanently serving stale data.
 
-## API endpoints
+## API endpoint
 
-- `GET /api/revenue-by-region`
-- `GET /api/top-products`
-- `GET /api/customer-churn`
-- `GET /api/low-stock-high-sales`
-- `GET /api/turnover-by-category`
+- `GET /api/metrics`
 
 ## How to run
 

@@ -21,6 +21,7 @@ python/
 - `.gitignore` ignores local Python cache files and virtual environments inside this folder.
 - `requirements.txt` defines the Python dependency used by the scripts.
 - `scripts/generate_data.py` generates the raw CSV files in `data/raw/` and injects a small set of controlled inconsistencies and business scenarios.
+- The Python layer helps demonstrate data preparation and ETL thinking alongside the app code.
 - `scripts/etl_pipeline.py` orchestrates the ETL flow and writes outputs to `data/processed/`.
 - `scripts/etl_core.py` contains ETL configuration, validation rules, cleaning helpers, and metric calculations.
 
