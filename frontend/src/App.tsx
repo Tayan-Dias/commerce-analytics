@@ -72,8 +72,8 @@ export default function App() {
               objectFit: "cover",
               flexShrink: 0,
             }}
-            src="/showcase-mark.jpg"
-            alt="Commerce Analytics Showcase mark"
+            src="/perfil.jpg"
+            alt="Commerce Analytics Showcase profile"
           />
           <div>
             <p
